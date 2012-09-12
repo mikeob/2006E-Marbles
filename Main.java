@@ -33,7 +33,7 @@ class Main {
 			Q.add(first);
 
 			// If it doesn't have solution, skip algorithm
-			if (!first.hasSolution()) {
+			if ((first.x + first.y + first.z) % 3 != 0) {
 				Q.clear();
 			}
 
@@ -108,12 +108,11 @@ class Main {
 		int hashCode;
 
 		public State(int x, int y, int z) {
-
 			this.x = x;
 			this.y = y;
 			this.z = z;
 
-			hashCode = x * y * z;
+			hashCode = x + 2*y + 4*z;
 		}
 
 		public String toString() {
@@ -122,16 +121,6 @@ class Main {
 
 		public boolean finalState() {
 			return x == y && y == z;
-		}
-
-		public boolean hasSolution() {
-			int sum = x + y + z;
-
-			if ((sum / 3) - (sum / (double) 3) != 0) {
-				return false;
-			}
-
-			return true;
 		}
 
 		public ArrayList<State> getChildren() {
@@ -164,7 +153,8 @@ class Main {
 		public boolean equals(Object o) {
 			State that = (State) o;
 
-			if (x == that.x && y == that.y && z == that.z) {
+			// If these two hold, then the last is implied
+			if (x == that.x && y == that.y) {
 				return true;
 			}
 
